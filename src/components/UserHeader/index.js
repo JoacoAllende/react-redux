@@ -9,7 +9,7 @@ function UserHeader(props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return { user: state.users.find(user => user.id === ownProps.user_id) }
+    return { user: state.usersList.users.find(user => user.id === ownProps.user_id) }
 }
 
 export default connect(mapStateToProps)(UserHeader)

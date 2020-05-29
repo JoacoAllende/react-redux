@@ -32,8 +32,7 @@ class PostList extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        posts: state.posts,
-        users: state.users
+        posts: state.postsList.posts
     }
 }
 
