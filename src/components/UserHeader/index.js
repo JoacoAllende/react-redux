@@ -1,8 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { getUsers } from '../../actions'
+import { HeaderComponent } from './index.styled'
+import BackgroundColorContext from '../../contexts/BackgroundColorContext'
 
 class UserHeader extends React.Component {
+
+    static contextType = BackgroundColorContext
 
     componentDidMount() {
         const { user_id } = this.props
@@ -13,8 +18,17 @@ class UserHeader extends React.Component {
         if (!this.props.user)
             return <div />
         const { first_name, last_name } = this.props.user
-        return <h4>{`${first_name} ${last_name}`}</h4>
+        return (
+            <HeaderComponent backgroundColor={this.context}>
+                <h4>{`${first_name} ${last_name}`}</h4>
+            </HeaderComponent>
+        )
     }
+}
+
+PropTypes.UserHeader = {
+    user_id: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
