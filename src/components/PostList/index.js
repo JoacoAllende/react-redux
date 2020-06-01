@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { getPosts, cancelGetPosts } from '../../actions'
 import UserHeader from '../UserHeader'
@@ -44,6 +45,10 @@ class PostList extends React.Component {
             </div>
         )
     }
+}
+
+PropTypes.PostList = {
+    posts: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => {

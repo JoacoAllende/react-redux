@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { getUsers } from '../../actions'
 import { HeaderComponent } from './index.styled'
@@ -23,6 +24,11 @@ class UserHeader extends React.Component {
             </HeaderComponent>
         )
     }
+}
+
+PropTypes.UserHeader = {
+    user_id: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
