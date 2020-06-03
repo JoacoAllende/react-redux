@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import GoogleAuth from "../GoogleAuth";
 
 function Header() {
   return (
@@ -10,6 +11,7 @@ function Header() {
       <Link to="/photos" className="item active">
         Photos
       </Link>
+      <GoogleAuth />
       <div className="ui bottom attached segment">
         <p></p>
       </div>

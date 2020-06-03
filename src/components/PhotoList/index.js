@@ -7,7 +7,6 @@ class PhotoList extends React.Component {
     this.props.getPhotos();
   }
   render() {
-    console.log(this.props.photos);
     return (
       <div className="ui small images">
         {this.props.photos.map(({ id, url, title }) => {

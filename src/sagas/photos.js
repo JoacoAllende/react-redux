@@ -8,7 +8,6 @@ function* getPhotos() {
 function* getPhotosSaga() {
   try {
     const photos = yield call(getPhotos);
-    console.log(photos);
     yield put({ type: "FETCH_PHOTOS", payload: { photos } });
   } catch (error) {}
 }
