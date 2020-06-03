@@ -1,5 +1,8 @@
 import React from "react";
+import { Route, BrowserRouter } from "react-router-dom";
+import Header from "../Header";
 import PostList from "../PostList";
+import PhotoList from "../PhotoList";
 import BackgroundColorContext from "../../contexts/BackgroundColorContext";
 import { buttonsArray } from "../../utils";
 
@@ -23,21 +26,26 @@ class App extends React.Component {
     return (
       <BackgroundColorContext.Provider value={backgroundColor}>
         <div className="ui container">
-          <div className="ui segment">
-            {buttonsArray.map(({ color, text }) => {
-              return (
-                <button
-                  key={color}
-                  value={color}
-                  className={`ui ${color} button`}
-                  onClick={this.onBackgroundColorChange}
-                >
-                  {text}
-                </button>
-              );
-            })}
-          </div>
-          <PostList />
+          <BrowserRouter>
+            <div className="ui segment">
+              {buttonsArray.map(({ color, text }) => {
+                return (
+                  <button
+                    key={color}
+                    value={color}
+                    className={`ui ${color} button`}
+                    onClick={this.onBackgroundColorChange}
+                  >
+                    {text}
+                  </button>
+                );
+              })}
+            </div>
+            {/* <Route path="/" exact /> */}
+            <Header />
+            <Route path="/posts" component={PostList} />
+            <Route path="/photos" component={PhotoList} />
+          </BrowserRouter>
         </div>
       </BackgroundColorContext.Provider>
     );

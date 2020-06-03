@@ -10,3 +10,7 @@ export const getUsers = (userId) => ({
   type: "GET_USERS",
   userId,
 });
+
+export const getPhotos = () => ({
+  type: "GET_PHOTOS",
+});
