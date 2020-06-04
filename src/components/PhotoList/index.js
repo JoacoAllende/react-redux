@@ -18,7 +18,11 @@ class PhotoList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { photos: state.photosList.photos };
+  return { photos: state.photos.photosList };
 };
 
-export default connect(mapStateToProps, { getPhotos })(PhotoList);
+const mapDispatchToProps = (dispatch) => ({
+  getPhotos: () => dispatch(getPhotos()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoList);

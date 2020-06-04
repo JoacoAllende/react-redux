@@ -9,7 +9,9 @@ function* getPhotosSaga() {
   try {
     const photos = yield call(getPhotos);
     yield put({ type: "FETCH_PHOTOS", payload: { photos } });
-  } catch (error) {}
+  } catch (error) {
+    yield put({ type: "FETCH_PHOTOS", payload: { photos: [] } });
+  }
 }
 
 export default function* photos() {

@@ -11,7 +11,9 @@ function* getUsersSaga(action) {
   try {
     const user = yield call(getUsers, action.userId);
     yield put({ type: "FETCH_USER", payload: { user } });
-  } catch (error) {}
+  } catch (error) {
+    yield put({ type: "FETCH_USER", payload: { user: null } });
+  }
 }
 
 export default function* users() {

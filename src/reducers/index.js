@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
 
-import postsReducer from "./postsReducer";
-import usersReducer from "./usersReducer";
-import photosReducer from "./photosReducer";
+import posts from "./posts";
+import users from "./users";
+import photos from "./photos";
 import auth from "./auth";
 
 export default combineReducers({
-  postsList: postsReducer,
-  usersList: usersReducer,
-  photosList: photosReducer,
-  isSignedIn: auth,
+  posts: posts,
+  users: users,
+  photos: photos,
+  auth: auth,
 });

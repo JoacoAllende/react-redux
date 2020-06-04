@@ -1,13 +1,13 @@
 const initialState = {
-  photos: [],
+  postsList: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_PHOTOS": {
+    case "FETCH_POSTS": {
       return {
         ...state,
-        photos: action.payload.photos,
+        postsList: action.payload.posts,
       };
     }
     default:

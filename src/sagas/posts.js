@@ -12,7 +12,9 @@ function* getPostsSaga() {
     yield delay(3000);
     const posts = yield call(getPosts);
     yield put({ type: "FETCH_POSTS", payload: { posts } });
-  } catch (error) {}
+  } catch (error) {
+    yield put({ type: "FETCH_POSTS", payload: { posts: [] } });
+  }
 }
 
 export default function* posts() {

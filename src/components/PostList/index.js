@@ -52,8 +52,13 @@ PropTypes.PostList = {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.postsList.posts,
+    posts: state.posts.postsList,
   };
 };
 
-export default connect(mapStateToProps, { getPosts, cancelGetPosts })(PostList);
+const mapDispatchToProps = (dispatch) => ({
+  getPosts: () => dispatch(getPosts()),
+  cancelGetPosts: () => dispatch(cancelGetPosts()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
