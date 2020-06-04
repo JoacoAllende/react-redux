@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getPosts, cancelGetPosts } from "../../actions";
 import UserHeader from "../UserHeader";
 
-function PostList(props) {
+function PostList() {
+  const posts = useSelector((state) => state.posts.postsList);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    props.getPosts();
+    dispatch(getPosts());
   }, []);
 
   const onCancelClick = () => {
-    props.cancelGetPosts();
+    dispatch(cancelGetPosts());
   };
 
   return (
@@ -21,7 +24,7 @@ function PostList(props) {
         </button>
       </div>
       <div className="ui divided relaxed list">
-        {props.posts.map(({ id, title, body, user_id }) => {
+        {posts.map(({ id, title, body, user_id }) => {
           return (
             <div className="item" key={id}>
               <div className="content">
@@ -43,15 +46,4 @@ PropTypes.PostList = {
   posts: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts.postsList,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  getPosts: () => dispatch(getPosts()),
-  cancelGetPosts: () => dispatch(cancelGetPosts()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostList);
+export default PostList;

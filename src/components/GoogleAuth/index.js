@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { trySignIn, trySignOut, onAuthChange } from "../../actions";
 
-function GoogleAuth(props) {
+function GoogleAuth() {
+  const isSignedIn = useSelector((state) => state.auth.auth);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     initGoogleAuth();
   }, []);
@@ -17,25 +20,24 @@ function GoogleAuth(props) {
           scope: "email",
         })
         .then(() => {
-          onAuthChange(null);
-          window.gapi.auth2.getAuthInstance().isSignedIn.listen(onAuthChange);
+          authChange(null);
+          window.gapi.auth2.getAuthInstance().isSignedIn.listen(authChange);
         });
     });
   };
 
-  const onAuthChange = () => {
-    props.onAuthChange(window.gapi.auth2.getAuthInstance().isSignedIn);
+  const authChange = () => {
+    dispatch(onAuthChange(window.gapi.auth2.getAuthInstance().isSignedIn));
   };
 
   const onTrySignIn = () => {
-    props.trySignIn(window.gapi.auth2.getAuthInstance());
+    dispatch(trySignIn(window.gapi.auth2.getAuthInstance()));
   };
 
   const onTrySignOut = () => {
-    props.trySignOut(window.gapi.auth2.getAuthInstance());
+    dispatch(trySignOut(window.gapi.auth2.getAuthInstance()));
   };
 
-  const { isSignedIn } = props;
   if (isSignedIn) {
     return (
       <button onClick={onTrySignOut} className="ui google red button">
@@ -54,14 +56,4 @@ function GoogleAuth(props) {
   return <div />;
 }
 
-const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.auth };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  trySignIn: (auth) => dispatch(trySignIn(auth)),
-  trySignOut: (auth) => dispatch(trySignOut(auth)),
-  onAuthChange: (signed) => dispatch(onAuthChange(signed)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GoogleAuth);
+export default GoogleAuth;
