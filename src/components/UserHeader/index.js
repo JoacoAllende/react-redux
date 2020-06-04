@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUsers } from "../../actions";
 import { HeaderComponent } from "./index.styled";
 import BackgroundColorContext from "../../contexts/BackgroundColorContext";
 
-class UserHeader extends React.Component {
-  static contextType = BackgroundColorContext;
+function UserHeader(props) {
+  const backgroundColor = useContext(BackgroundColorContext);
 
-  componentDidMount() {
-    const { user_id } = this.props;
-    this.props.getUsers(user_id);
-  }
+  useEffect(() => {
+    const { user_id } = props;
+    props.getUsers(user_id);
+  }, []);
 
-  render() {
-    if (!this.props.user) return <div />;
-    const { first_name, last_name } = this.props.user;
-    return (
-      <HeaderComponent backgroundColor={this.context}>
-        <h4>{`${first_name} ${last_name}`}</h4>
-      </HeaderComponent>
-    );
-  }
+  if (!props.user) return <div />;
+  const { first_name, last_name } = props.user;
+  return (
+    <HeaderComponent backgroundColor={backgroundColor}>
+      <h4>{`${first_name} ${last_name}`}</h4>
+    </HeaderComponent>
+  );
 }
 
 PropTypes.UserHeader = {

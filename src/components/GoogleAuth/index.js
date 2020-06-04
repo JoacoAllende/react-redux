@@ -1,22 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { trySignIn, trySignOut, onAuthChange } from "../../actions";
 
-class GoogleAuth extends React.Component {
-  constructor(props) {
-    super(props);
-    this.initGoogleAuth = this.initGoogleAuth.bind(this);
-    this.onAuthChange = this.onAuthChange.bind(this);
-    this.onTrySignIn = this.onTrySignIn.bind(this);
-    this.onTrySignOut = this.onTrySignOut.bind(this);
-  }
+function GoogleAuth(props) {
+  useEffect(() => {
+    initGoogleAuth();
+  }, []);
 
-  componentDidMount() {
-    this.initGoogleAuth();
-  }
-
-  initGoogleAuth() {
+  const initGoogleAuth = () => {
     window.gapi.load("client:auth2", () => {
       window.gapi.client
         .init({
@@ -25,44 +17,41 @@ class GoogleAuth extends React.Component {
           scope: "email",
         })
         .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(null);
-          this.auth.isSignedIn.listen(this.onAuthChange);
+          onAuthChange(null);
+          window.gapi.auth2.getAuthInstance().isSignedIn.listen(onAuthChange);
         });
     });
-  }
+  };
 
-  onAuthChange() {
-    this.props.onAuthChange(this.auth.isSignedIn);
-  }
+  const onAuthChange = () => {
+    props.onAuthChange(window.gapi.auth2.getAuthInstance().isSignedIn);
+  };
 
-  onTrySignIn() {
-    this.props.trySignIn(this.auth);
-  }
+  const onTrySignIn = () => {
+    props.trySignIn(window.gapi.auth2.getAuthInstance());
+  };
 
-  onTrySignOut() {
-    this.props.trySignOut(this.auth);
-  }
+  const onTrySignOut = () => {
+    props.trySignOut(window.gapi.auth2.getAuthInstance());
+  };
 
-  render() {
-    const { isSignedIn } = this.props;
-    if (isSignedIn) {
-      return (
-        <button onClick={this.onTrySignOut} className="ui google red button">
-          <i className="google white icon"></i>
-          Log out
-        </button>
-      );
-    } else if (!isSignedIn) {
-      return (
-        <button onClick={this.onTrySignIn} className="ui google green button">
-          <i className="google white icon"></i>
-          Login with Google
-        </button>
-      );
-    }
-    return <div />;
+  const { isSignedIn } = props;
+  if (isSignedIn) {
+    return (
+      <button onClick={onTrySignOut} className="ui google red button">
+        <i className="google white icon"></i>
+        Log out
+      </button>
+    );
+  } else if (!isSignedIn) {
+    return (
+      <button onClick={onTrySignIn} className="ui google green button">
+        <i className="google white icon"></i>
+        Login with Google
+      </button>
+    );
   }
+  return <div />;
 }
 
 const mapStateToProps = (state) => {
