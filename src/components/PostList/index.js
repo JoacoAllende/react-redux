@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts, cancelGetPosts } from "../../actions";
 import UserHeader from "../UserHeader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 function PostList() {
   const posts = useSelector((state) => state.posts.postsList);
   const dispatch = useDispatch();
+  useDocumentTitle("Posts");
 
   useEffect(() => {
     dispatch(getPosts());

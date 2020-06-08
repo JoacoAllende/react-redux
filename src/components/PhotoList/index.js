@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPhotos } from "../../actions";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 function PhotoList() {
   const photos = useSelector((state) => state.photos.photosList);
   const dispatch = useDispatch();
+  useDocumentTitle("Photos");
 
   useEffect(() => {
     dispatch(getPhotos());
